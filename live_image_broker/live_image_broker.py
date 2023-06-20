@@ -1,10 +1,7 @@
-""""
-Copyright (C) 2022 twyleg
-"""
+# Copyright (C) 2022 NG:ITL
 import socket
 import select
 import pynng
-import time
 
 IMAGE_WIDTH = 1280
 IMAGE_HEIGHT = 720
@@ -14,9 +11,6 @@ IMAGE_SIZE = IMAGE_WIDTH * IMAGE_HEIGHT * IMAGE_DEPTH
 
 SERVER_INBOUND_IP = '127.0.0.1'
 SERVER_INBOUND_PORT = 50000
-#
-# SERVER_OUTBOUND_IP = '127.0.0.1'
-# SERVER_OUTBOUND_PORT = 50001
 
 NNG_ADDRESS = "ipc:///tmp/RAAI/broker.ipc"
 
@@ -69,9 +63,3 @@ class LiveImageBroker:
                 self.outbound_sock.send(data)
         except:
             self.close_client_inbound_socket()
-
-
-if __name__ == "__main__":
-    live_image_broker = LiveImageBroker()
-    live_image_broker.run()
-

@@ -4,8 +4,8 @@
 block_cipher = None
 
 a = Analysis(
-    ['live_image_broker\\live_image_broker.py'],
-    pathex=['live_image_broker'],
+    ['main.py'],
+    pathex=[],
     binaries=[],
     datas=[],
     hiddenimports=['_cffi_backend'],
