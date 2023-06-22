@@ -9,13 +9,13 @@ IMAGE_DEPTH = 3
 
 IMAGE_SIZE = IMAGE_WIDTH * IMAGE_HEIGHT * IMAGE_DEPTH
 
-SERVER_INBOUND_IP = '127.0.0.1'
+SERVER_INBOUND_IP = "127.0.0.1"
 SERVER_INBOUND_PORT = 50000
 
 NNG_ADDRESS = "ipc:///tmp/RAAI/broker.ipc"
 
-class LiveImageBroker:
 
+class LiveImageBroker:
     def __init__(self) -> None:
         self.server_inbound_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_inbound_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -24,7 +24,7 @@ class LiveImageBroker:
 
         self.outbound_sock = pynng.Pub0()
         self.outbound_sock.listen(NNG_ADDRESS)
-        print(f'Publishing to the address {NNG_ADDRESS}')
+        print(f"Publishing to the address {NNG_ADDRESS}")
 
         self.client_inbound_sock = None
 
@@ -47,11 +47,11 @@ class LiveImageBroker:
     def close_client_inbound_socket(self):
         self.client_inbound_sock.close()
         self.client_inbound_sock = None
-        print(f'Inbound client disconnected')
+        print(f"Inbound client disconnected")
 
     def handle_incoming_inbound_connection(self) -> None:
         self.client_inbound_sock, address = self.server_inbound_sock.accept()
-        print(f'Inbound client connected: {address}')
+        print(f"Inbound client connected: {address}")
 
     def handle_client_inbound_data(self) -> None:
         try:
