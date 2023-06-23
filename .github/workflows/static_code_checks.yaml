@@ -9,5 +9,9 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - run: pip install -r requirements.txt
-      - run: tox -e type,lint_check
+      - name: 'Install requirements'
+        run: pip install -r requirements.txt
+      - name: 'Run typechecks'
+        run: tox -e type
+      - name: 'Run linter'
+        run: tox -e lint_check

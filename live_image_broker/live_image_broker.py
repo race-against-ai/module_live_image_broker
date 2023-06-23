@@ -1,5 +1,7 @@
 # Copyright (C) 2022 NG:ITL
 import socket
+from typing import Optional
+
 import select
 import pynng
 
@@ -26,7 +28,7 @@ class LiveImageBroker:
         self.outbound_sock.listen(NNG_ADDRESS)
         print(f"Publishing to the address {NNG_ADDRESS}")
 
-        self.client_inbound_sock = None
+        self.client_inbound_sock: Optional[socket.socket] = None
 
         self.image_count = 0
 
@@ -55,6 +57,7 @@ class LiveImageBroker:
 
     def handle_client_inbound_data(self) -> None:
         try:
+            assert self.client_inbound_sock is not None
             data = self.client_inbound_sock.recv(IMAGE_SIZE, socket.MSG_WAITALL)
             self.image_count = self.image_count + 1
             if len(data) != IMAGE_SIZE:
