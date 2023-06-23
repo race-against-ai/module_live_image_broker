@@ -25,5 +25,5 @@ jobs:
     - name: Build package (exe)
       run: \
         tox -e pyinstaller \
-        ls -l
+        dir dist
 
