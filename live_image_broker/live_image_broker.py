@@ -26,7 +26,7 @@ class LiveImageBroker:
 
         self.outbound_sock = pynng.Pub0()
         self.outbound_sock.listen(NNG_ADDRESS)
-        print(f"Publishing to the address {NNG_ADDRESS}")
+        print(f'Publishing to the address {NNG_ADDRESS}')
 
         self.client_inbound_sock: Optional[socket.socket] = None
 
