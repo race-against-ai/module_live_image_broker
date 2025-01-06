@@ -1,29 +1,44 @@
-# Live image broker
+# Live Image Broker  
 
-![Architecture](../../doc/export/architecture.svg "architecture")
+The **Live Image Broker** is designed to resolve connectivity issues between an image source (e.g., `ffmpeg`) and an image sink (e.g., `live_visualization`) during live video streaming.  
 
-Since the rawvideo is transferred via TCP/IP, one application (ffmpeg or live_visualization)
-needs to act as a server while the other one acts as a client.
-While both applications are capable of both roles, this setup creates huge disadvantage.
-When either one of the applications goes down, the other one will go down with it since the connection gets lost.
-Especially on the ffmpeg side this can have negative implications because the DJI Goggles might require a
-plug out and back in to work properly again.
-To overcome such difficulties, the live_image_broker acts according to his name, as a broker between the two.
-It acts as a server to both sides. The image source (ffmpeg) can connect on port 50000 and the image sink 
-(live_visualization) can connect on port 50001. The live_image_broker will simply pass on all received image data
-and also waits for a reconnect if either application (source or sink) is killed. This way both applications can
-keep running when the other one is killed, as long as the live_image_broker keeps running.
+![Architecture](../../doc/export/architecture.svg "Architecture")  
 
-![live_image_broker schema](../../doc/export/live_image_broker_schema.svg "live_image_broker schema")
+---
 
-## Setup environment
+## Overview  
 
-To setup a development environment and install all requirements run the following commands (example for windows):
+When transferring raw video data via TCP/IP, one application must act as a server while the other acts as a client. However, this setup introduces a significant drawback:  
+- If either application crashes or disconnects, the other application will also fail due to the lost connection.  
+- In particular, this can negatively impact `ffmpeg` because the DJI Goggles may require a manual plug-out and plug-in to function properly again.  
 
-    python -m venv venv
-    venv/Scripts/activate
-    python -m pip install -r requirements.txt
+The **Live Image Broker** solves this issue by acting as a broker between the two applications:  
+- It serves as a **server** for both the image source and the image sink.  
+- The **image source** (e.g., `ffmpeg`) connects on **port 50000**, while the **image sink** (e.g., `live_visualization`) connects on **port 50001**.  
+- The broker passes all received image data from the source to the sink and handles reconnections if either application goes down.  
 
-## Run
+This ensures that both applications can keep running independently, as long as the **Live Image Broker** remains active.  
 
-    python live_image_broker/main.py
+![Live Image Broker Schema](../../doc/export/live_image_broker_schema.svg "Live Image Broker Schema")  
+
+---
+
+## Environment Setup  
+
+To set up a development environment and install all required dependencies, run the following commands (example for Windows):  
+
+```bash
+python -m venv venv
+venv/Scripts/activate
+python -m pip install -r requirements.txt
+```
+
+---
+
+## How to Run  
+
+Execute the following command to start the **Live Image Broker**:  
+
+```bash
+python live_image_broker/main.py
+```
